@@ -38,12 +38,12 @@ namespace DataAccess
                 Value = value
             };
         }
-        public DataTable GetDataTable(string commandText, SqlParameter[] parameters = null)
+        public DataTable GetDataTable(string SpName, SqlParameter[] parameters = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -60,12 +60,12 @@ namespace DataAccess
                 }
             }
         }
-        public DataSet GetDataSet(string commandText, SqlParameter[] parameters = null)
+        public DataSet GetDataSet(string SpName, SqlParameter[] parameters = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -82,12 +82,12 @@ namespace DataAccess
                 }
             }
         }
-        public IDataReader GetDataReader(string commandText, SqlParameter[] parameters, out SqlConnection connection)
+        public IDataReader GetDataReader(string SpName, SqlParameter[] parameters, out SqlConnection connection)
         {
             IDataReader reader = null;
             connection = new SqlConnection(ConnectionString);
             connection.Open();
-            var command = new SqlCommand(commandText, connection);
+            var command = new SqlCommand(SpName, connection);
             command.CommandType = CommandType.StoredProcedure;
             if (parameters != null)
             {
@@ -100,12 +100,12 @@ namespace DataAccess
 
             return reader;
         }
-        public void Delete(string commandText, SqlParameter[] parameters = null)
+        public void Delete(string SpName, SqlParameter[] parameters = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -119,12 +119,12 @@ namespace DataAccess
                 }
             }
         }
-        public void Insert(string commandText, SqlParameter[] parameters)
+        public void Insert(string SpName, List <object>parameters)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -138,13 +138,13 @@ namespace DataAccess
                 }
             }
         }
-        public int Insert(string commandText, SqlParameter[] parameters, out int lastId)
+        public int Insert(string SpName, SqlParameter[] parameters, out int lastId)
         {
             lastId = 0;
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -160,13 +160,13 @@ namespace DataAccess
             }
             return lastId;
         }
-        public long Insert(string commandText, SqlParameter[] parameters, out long lastId)
+        public long Insert(string SpName, SqlParameter[] parameters, out long lastId)
         {
             lastId = 0;
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -182,14 +182,14 @@ namespace DataAccess
             }
             return lastId;
         }
-        public void InsertWithTransaction(string commandText, SqlParameter[] parameters)
+        public void InsertWithTransaction(string SpName, SqlParameter[] parameters)
         {
             SqlTransaction transactionScope = null;
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 transactionScope = connection.BeginTransaction();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -215,14 +215,14 @@ namespace DataAccess
                 }
             }
         }
-        public void InsertWithTransaction(string commandText, IsolationLevel isolationLevel, SqlParameter[] parameters)
+        public void InsertWithTransaction(string SpName, IsolationLevel isolationLevel, SqlParameter[] parameters)
         {
             SqlTransaction transactionScope = null;
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 transactionScope = connection.BeginTransaction(isolationLevel);
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -248,12 +248,12 @@ namespace DataAccess
                 }
             }
         }
-        public void Update(string commandText, SqlParameter[] parameters)
+        public void Update(string SpName, SqlParameter[] parameters)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -267,14 +267,14 @@ namespace DataAccess
                 }
             }
         }
-        public void UpdateWithTransaction(string commandText, SqlParameter[] parameters)
+        public void UpdateWithTransaction(string SpName, SqlParameter[] parameters)
         {
             SqlTransaction transactionScope = null;
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 transactionScope = connection.BeginTransaction();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -300,14 +300,14 @@ namespace DataAccess
                 }
             }
         }
-        public void UpdateWithTransaction(string commandText, IsolationLevel isolationLevel, SqlParameter[] parameters)
+        public void UpdateWithTransaction(string SpName, IsolationLevel isolationLevel, SqlParameter[] parameters)
         {
             SqlTransaction transactionScope = null;
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 transactionScope = connection.BeginTransaction(isolationLevel);
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
@@ -333,12 +333,12 @@ namespace DataAccess
                 }
             }
         }
-        public object GetScalarValue(string commandText, SqlParameter[] parameters = null)
+        public object GetScalarValue(string SpName, SqlParameter[] parameters = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
+                using (var command = new SqlCommand(SpName, connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     if (parameters != null)
