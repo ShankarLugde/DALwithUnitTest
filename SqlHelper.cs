@@ -119,7 +119,7 @@ namespace DataAccess
                 }
             }
         }
-        public void Insert(string SpName, List <object>parameters)
+        public void Insert(string SpName, SqlParameter[] parameters)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
